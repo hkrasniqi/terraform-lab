@@ -24,7 +24,8 @@ data "aws_iam_policy_document" "this" {
       "eks:DescribeCluster",
       "eks:ListClusters",
       "eks:DescribeAddonVersions",
-      "eks:ListIdentityProviderConfigs"
+      "eks:ListIdentityProviderConfigs",
+      "s3:CreateBucket"
     ]
     resources = ["*"]
   }
@@ -49,4 +50,13 @@ resource "aws_iam_user_login_profile" "this" {
 
 resource "aws_iam_access_key" "this" {
   user = aws_iam_user.this.name
+}
+
+resource "aws_s3_bucket" "s3" {
+  bucket = "my-tf-test-bucket-cimi"
+
+  tags = {
+    Name        = "My bucket"
+    Environment = "Assigment"
+  }
 }
